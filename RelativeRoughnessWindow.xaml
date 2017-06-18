@@ -1,0 +1,329 @@
+﻿<Window x:Class="HVACDesigner.RelativeRoughnessWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HVACDesigner"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:k="clr-namespace:HVACDesigner.Controls"
+        xmlns:viewModels="clr-namespace:HVACDesigner.ViewModels"
+        mc:Ignorable="d"
+        Title="Relative roughness" Height="400" Width="640">
+
+    <Window.Resources>
+        <viewModels:ValueWindowViewModel x:Key="ValueWindowViewModel"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <viewModels:ValueWindowViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="Esc" Command="{Binding WindowCloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+    </Window.InputBindings>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Type of material" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="0" Grid.Column="0"  BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" TextWrapping="Wrap" TextAlignment="Center"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center">
+            Relative roughness factor
+            <LineBreak/>
+            [mm]
+        </TextBlock>
+        <Border Grid.Row="0" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="0" Grid.Column="2" Text="Duct roughness category" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="0" Grid.Column="2" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Steel plate, PVC, aluminum" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="1" Grid.Column="1" Content="0.01-0.06" Value="0.000035"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="smooth" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1"/>
+
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Galvanized sheet steel, connections every 1.2 m" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="2" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="2" Grid.Column="1" Content="0.05-0.1" Value="0.000075"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="2" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Grid.RowSpan="2" Text="Medium smooth" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="2" Grid.Column="3" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Spiro duct" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="3" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="3" Grid.Column="1" Content="0.12" Value="0.00012"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="3" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Galvanized sheet steel, connections every 0.8 m" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="4" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="4" Grid.Column="1" Content="0.15" Value="0.00015"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="4" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="Medium" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="4" Grid.Column="3" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Fiberglass ducts, rigid" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="5" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="5" Grid.Column="1" Content="0.09" Value="0.00009"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="5" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="Medium rough" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="5" Grid.Column="3" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="Flex ducts - full stretch" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="6" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="6" Grid.Column="1" Content="1.0-4.6" Value="0.0028"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="6" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Grid.RowSpan="5" Text="Rough" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="6" Grid.Column="3" Grid.RowSpan="5" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="Plastered wall" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="7" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="7" Grid.Column="1" Content="1.3" Value="0.0013"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="7" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+
+        <TextBlock Grid.Row="8" Grid.Column="0" Text="Concrete" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="8" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="8" Grid.Column="1" Content="1.0-2.0" Value="0.0015"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="8" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+        <TextBlock Grid.Row="9" Grid.Column="0" Text="Brick wall with mortar" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="9" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="9" Grid.Column="1" Content="3.0-4.0" Value="0.0035"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="9" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+
+
+
+        <TextBlock Grid.Row="10" Grid.Column="0" Text="Brick Wall without plaster" TextAlignment="Center"
+               TextWrapping="Wrap"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+        <Border Grid.Row="10" Grid.Column="0" BorderBrush="Black" BorderThickness="1"/>
+        <k:ValueButton Grid.Row="10" Grid.Column="1" Content="5.0-8.0" Value="0.0065"
+               Background="Transparent"
+               Margin="2"
+               HorizontalAlignment="Stretch" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Click">
+                    <i:InvokeCommandAction 
+                                Command="{Binding SetValueCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type k:ValueButton}}}"/>
+                    <i:InvokeCommandAction
+                        Command="{Binding WindowCloseCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </k:ValueButton>
+        <Border Grid.Row="10" Grid.Column="1" BorderBrush="Black" BorderThickness="1"/>
+    </Grid>
+</Window>

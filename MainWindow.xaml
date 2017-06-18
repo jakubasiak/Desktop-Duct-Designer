@@ -1,0 +1,751 @@
+﻿<Window x:Class="HVACDesigner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:HVACDesigner"
+        xmlns:viewModels="clr-namespace:HVACDesigner.ViewModels"
+        mc:Ignorable="d"
+        Title="Duct Design" Height="640" Width="1000" Topmost="{Binding ElementName=top, Path=IsChecked}">
+    <Window.Resources>
+        <BitmapImage x:Key="up" UriSource="/Resources/up.png"/>
+        <BitmapImage x:Key="down" UriSource="/Resources/down.png"/>
+        <viewModels:DuctDesignViewModel x:Key="DuctDesignViewModel" />
+        <viewModels:SelectionTypeToStringConverter x:Key="SelectionTypeToStringConverter" />
+        <viewModels:MeterToMillimeterConverter x:Key="MeterToMillimeterConverter" />
+        <viewModels:ComaToDotConverter x:Key="ComaToDotConverter" />
+        <viewModels:NCalcConverter x:Key="NCalcConverter"/>
+        <viewModels:ColapseDuctSystemPanelConverter x:Key="ColapseDuctSystemPanelConverter" />
+        <viewModels:TargetValueToSolidBrushConverter x:Key="TargetValueToSolidBrushConverter"/>
+    </Window.Resources>
+
+
+    <Window.DataContext>
+        <viewModels:DuctDesignViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="New" Command="{Binding NewProjectCommand}"/>
+                <MenuItem Header="Open" Command="{Binding LoadDuctSystem}"/>
+                <Separator/>
+                <MenuItem Header="Save" Command="{Binding SaveDuctSystem}"/>
+                <MenuItem Header="Save As..." Command="{Binding SaveAsDuctSystem}"/>
+                <Separator/>
+                <MenuItem Header="Export to CSV" Command="{Binding ExportDuctSystemToCsv}" />
+                <MenuItem Header="Export to CSV As..." Command="{Binding ExportDuctSystemToCsvAs}" />
+                <MenuItem Header="Export PDF Raport" Command="{Binding SaveDuctSystemRaport}" />
+                <Separator/>
+                <MenuItem Header="_Close" Command="{Binding WindowCloseCommand}" 
+                    CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Cut" Command="Cut"/>
+                <MenuItem Header="Copy" Command="Copy"/>
+                <MenuItem Header="Paste" Command="Paste"/>
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="Recomended velocity" 
+                          Command="{Binding StartTargetValueWindowCommand}"
+                          CommandParameter="{Binding SelectionType}"/>
+                <MenuItem Header="Relative roughness" 
+                          Command="{Binding StartRelativeRoughnessWindowCommand}"/>
+                <Separator/>
+                <MenuItem Header="Always on top" IsCheckable="True" Name="top"/>
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="About" Command="{Binding AboutCommand}"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <!--<ColumnDefinition Width="*"/>-->
+                <ColumnDefinition Width="{Binding DuctSystem.DuctCollection.Count, Converter={StaticResource ColapseDuctSystemPanelConverter}}"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid  Grid.Row="0" Grid.RowSpan="2" VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <GroupBox Header="Air flow parameters" Margin="5,5" Grid.Row="0" Grid.Column="0">
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Air flow</TextBlock>
+                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="5,1" Background="Honeydew" Text="{Binding Path=Flow,StringFormat={}{0:0.####}, Mode=TwoWay, Converter={StaticResource NCalcConverter}, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[m3/h]</TextBlock>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Temperature</TextBlock>
+                                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,0,5,2" Text="{Binding Path=Temperature, Mode=TwoWay,Converter={StaticResource ComaToDotConverter}, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[C]</TextBlock>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Pressure</TextBlock>
+                                <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" Text="{Binding Path=Pressure, Mode=TwoWay, Converter={StaticResource ComaToDotConverter}, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[Pa]</TextBlock>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Density</TextBlock>
+                                <TextBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" IsEnabled="False" Text="{Binding Path=Density, Mode=OneWay, UpdateSourceTrigger=PropertyChanged,StringFormat={}{0:F4}}"></TextBox>
+                                <TextBlock Grid.Row="3" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[kg/m3]</TextBlock>
+
+
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Selection parameters" Margin="5,5" Grid.Row="1" Grid.Column="0">
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Target value</TextBlock>
+                                <TextBox Name="targetValueTextBox" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" Background="Honeydew" Text="{Binding Path=TargetValue, Mode=TwoWay, Converter={StaticResource ComaToDotConverter} ,UpdateSourceTrigger=LostFocus}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDoubleClick">
+                                            <i:InvokeCommandAction 
+                                Command="{Binding StartTargetValueWindowCommand}"
+                                CommandParameter="{Binding SelectionType}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0" Text="{Binding Path=SelectionType, Mode=OneWay, Converter={StaticResource SelectionTypeToStringConverter}, UpdateSourceTrigger=PropertyChanged}"></TextBlock>
+                                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center">Type of selection</TextBlock>
+                                <ComboBox Name="selectionTypeComboBox" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2,5,47" ItemsSource="{Binding Path=SelectionTypeSource, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectionType, Mode=TwoWay}" Grid.RowSpan="2"/>
+
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap">Friction factor approximation algorithm</TextBlock>
+                                <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" ItemsSource="{Binding Path=ApproximationSource, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=Approximation, Mode=TwoWay}"/>
+
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Duct parameters" Margin="5,5" Grid.Row="2" Grid.Column="0">
+                            <Grid Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                    <ColumnDefinition Width="2*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap">Rectangular duct height</TextBlock>
+                                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" Background="Honeydew" Text="{Binding Path=RectangularDuctHeight, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource MeterToMillimeterConverter}}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="0" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[mm]</TextBlock>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap">Relative roughness</TextBlock>
+                                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" Text="{Binding Path=RelativeRoughness, Mode=TwoWay, Converter={StaticResource MeterToMillimeterConverter}, UpdateSourceTrigger=LostFocus}">
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="MouseDoubleClick">
+                                            <i:InvokeCommandAction 
+                                Command="{Binding StartRelativeRoughnessWindowCommand}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[mm]</TextBlock>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap">Duct lenght</TextBlock>
+                                <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,2" Text="{Binding Path=DuctLenght, Mode=TwoWay, Converter={StaticResource ComaToDotConverter}, UpdateSourceTrigger=LostFocus}" >
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Gesture="Enter" 
+                                Command="{Binding UpdateOnEnterCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type TextBox}}}" />
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                                <TextBlock Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5,0">[m]</TextBlock>
+
+                            </Grid>
+                        </GroupBox>
+
+                        <GroupBox Header="Local Losses" Margin="5,5" Grid.Row="3" Grid.Column="0">
+                            <DataGrid ItemsSource="{Binding Path=LocalLosses, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                          IsReadOnly="False" CanUserAddRows="True" CanUserDeleteRows="True"
+                          AutoGenerateColumns="False"
+                          ScrollViewer.CanContentScroll="True" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          SelectionUnit="FullRow"
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch"       
+                                  >
+                                <DataGrid.Resources>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                    </Style>
+                                </DataGrid.Resources>
+
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="RowEditEnding">
+                                        <i:InvokeCommandAction 
+                                Command="{Binding UpdateOnDataGridCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"/>
+                                    </i:EventTrigger>
+
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction 
+                                Command="{Binding UpdateOnDataGridCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor,AncestorType={x:Type DataGrid}}}"/>
+                                    </i:EventTrigger>
+
+                                </i:Interaction.Triggers>
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Binding="{Binding Path=LocalLossCoefficient, Mode=TwoWay, UpdateSourceTrigger=LostFocus, Converter={StaticResource ComaToDotConverter}}" Width="*">
+                                        <DataGridTextColumn.Header>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="C [-]" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataGridTextColumn.Header>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                    <DataGridTextColumn Binding="{Binding Path=Description, Mode=TwoWay, UpdateSourceTrigger =LostFocus}" Width="3*">
+                                        <DataGridTextColumn.Header>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="Description" HorizontalAlignment="Center"/>
+                                            </StackPanel>
+                                        </DataGridTextColumn.Header>
+                                        <DataGridTextColumn.ElementStyle>
+                                            <Style TargetType="{x:Type TextBlock}">
+                                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                            </Style>
+                                        </DataGridTextColumn.ElementStyle>
+                                    </DataGridTextColumn>
+
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </GroupBox>
+                    </Grid>
+                </Grid>
+
+                <GroupBox Header="Round ducts" Margin="5,5" Grid.Row="0" Grid.Column="1">
+                    <DataGrid Name="roundDuctGrid" ItemsSource="{Binding Path=RoundDuctList, Mode=OneWay}"
+                          IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                          AutoGenerateColumns="False"
+                          ScrollViewer.CanContentScroll="True" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch" Margin="0,2,0,-2">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.Resources>
+
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=selectionTypeComboBox, Path=SelectedIndex}" Value="0" >
+                                        <Setter Property="Background" Value="{Binding VelocityAlphaValue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TargetValueToSolidBrushConverter}}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=selectionTypeComboBox, Path=SelectedIndex}" Value="1" >
+                                        <Setter Property="Background" Value="{Binding PressureAlphaValue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TargetValueToSolidBrushConverter}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                Command="{Binding StartDuctDetailsWindowCommand}"
+                                CommandParameter="{Binding ElementName=roundDuctGrid,Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Size}" Width="*" CanUserSort="False">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Size" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[mm]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding Velocity, StringFormat={}{0:F2}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Velocity" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[m/s]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding FrictionLoss, StringFormat={}{0:F4}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Friction Loss" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[Pa/m]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding PressureDrop, StringFormat={}{0:F2}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Pressure Drop" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[Pa]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn Width="0.3*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="2,2" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center" 
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.AddToDuctSystemCommand}" 
+                                            CommandParameter="{Binding ElementName=roundDuctGrid, Path=SelectedItem}"
+                                            >
+                                            +
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox Header="Rectangular ducts" Margin="5,5" Grid.Row="1" Grid.Column="1">
+                    <DataGrid Name="rectangularDuctGrid" ItemsSource="{Binding Path=RectangularDuctList, Mode=OneWay}"
+                          IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                          AutoGenerateColumns="False"
+                          ScrollViewer.CanContentScroll="True" 
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                          HorizontalAlignment="Stretch" 
+                          VerticalAlignment="Stretch">
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            </Style>
+                        </DataGrid.Resources>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseDoubleClick">
+                                <i:InvokeCommandAction 
+                                Command="{Binding StartDuctDetailsWindowCommand}"
+                                CommandParameter="{Binding ElementName=rectangularDuctGrid,Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=selectionTypeComboBox, Path=SelectedIndex}" Value="0" >
+                                        <Setter Property="Background" Value="{Binding VelocityAlphaValue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TargetValueToSolidBrushConverter}}"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=selectionTypeComboBox, Path=SelectedIndex}" Value="1" >
+                                        <Setter Property="Background" Value="{Binding PressureAlphaValue, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TargetValueToSolidBrushConverter}}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding Size}" Width="*" CanUserSort="False">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Size" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[mm]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding Velocity, StringFormat={}{0:F2}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Velocity" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[m/s]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding FrictionLoss, StringFormat={}{0:F4}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Friction Loss" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[Pa/m]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding PressureDrop, StringFormat={}{0:F2}}" Width="*">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="Pressure Drop" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="[Pa]" HorizontalAlignment="Center" />
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="HorizontalAlignment" Value="Center" />
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTemplateColumn Width="0.3*">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Button Margin="2,2" 
+                                            HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"
+                                            Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}, Path=DataContext.AddToDuctSystemCommand}" 
+                                            CommandParameter="{Binding ElementName=rectangularDuctGrid, Path=SelectedItem}"
+                                            >
+                                            +
+                                        </Button>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="6*"/>
+                    <RowDefinition Height="4*"/>
+                </Grid.RowDefinitions>
+                <GroupBox Header="Duct System" Grid.Row="0" Grid.Column="0" Margin="5,5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <ListBox Grid.Row="0"
+                        Name="ductSystemList"
+                    ItemsSource="{Binding Path=DuctSystem.DuctCollection}"
+                                 SelectedIndex="{Binding DuctSystemSelectedItem, Mode=TwoWay}"
+                    HorizontalContentAlignment="Stretch">
+                            <ListBox.InputBindings>
+                                <KeyBinding Gesture="Delete"
+                                Command="{Binding DeleteDuctFromDuctSystem}"
+                                CommandParameter="{Binding ElementName=ductSystemList,Path=SelectedItem}"/>
+                            </ListBox.InputBindings>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseDoubleClick">
+                                    <i:InvokeCommandAction 
+                                Command="{Binding StartDuctDetailsWindowCommand}"
+                                CommandParameter="{Binding ElementName=ductSystemList,Path=SelectedItem}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Expander DockPanel.Dock="Left" HorizontalAlignment="Stretch" Header="{Binding Size}">
+                                        <StackPanel Orientation="Vertical">
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Length: "/>
+                                                <TextBlock Text="{Binding Length, StringFormat={}{0:F4}}"/>
+                                                <TextBlock Text=" m"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Air Flow: "/>
+                                                <TextBlock Text="{Binding AirFlow.Flow}"/>
+                                                <TextBlock Text=" m3/h"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Local pressure drop: "/>
+                                                <TextBlock Text="{Binding LocalPressureDrop, StringFormat={}{0:F4}}"/>
+                                                <TextBlock Text=" Pa"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Linear pressure drop: "/>
+                                                <TextBlock Text="{Binding LinearPressureDrop, StringFormat={}{0:F4}}"/>
+                                                <TextBlock Text=" Pa"/>
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="Total pressure drop: "/>
+                                                <TextBlock Text="{Binding PressureDrop, StringFormat={}{0:F4}}"/>
+                                                <TextBlock Text=" Pa"/>
+                                            </StackPanel>
+
+                                        </StackPanel>
+                                    </Expander>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel  Grid.Row="1"  Orientation="Horizontal" FlowDirection="RightToLeft">
+                            <Button Margin="5" Command="{Binding MoveUpCommand}" CommandParameter="{Binding ElementName=ductSystemList, Path=SelectedItem}">
+                                <Image Source="{StaticResource up}"/>
+                            </Button>
+                            <Button Margin="5" Command="{Binding MoveDownCommand}" CommandParameter="{Binding ElementName=ductSystemList, Path=SelectedItem}">
+                                <Image Source="{StaticResource down}"/>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </GroupBox>
+                <GroupBox Header="Duct system parameters" Grid.Row="1" Grid.Column="0" Margin="5,5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="1.5*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Total pressure drop
+                        </TextBlock>
+                        <TextBox Grid.Row="0" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.TotalPressureDrop, StringFormat={}{0:F4}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [Pa]
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Local pressure drop
+                        </TextBlock>
+                        <TextBox Grid.Row="1" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.LocalPressureDrop, StringFormat={}{0:F4}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [Pa]
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Linear pressure drop
+                        </TextBlock>
+                        <TextBox Grid.Row="2" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.LinearPressureDrop, StringFormat={}{0:F4}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [Pa]
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Total system lenght
+                        </TextBlock>
+                        <TextBox Grid.Row="3" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.TotalSystemLength, StringFormat={}{0:F2}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [m]
+                        </TextBlock>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Average air velocity
+                        </TextBlock>
+                        <TextBox Grid.Row="4" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.AverageAirVelocity, StringFormat={}{0:F4}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [m/s]
+                        </TextBlock>
+
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            Average friction loss
+                        </TextBlock>
+                        <TextBox Grid.Row="5" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.AverageFrictionLoss, StringFormat={}{0:F4}, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [Pa/m]
+                        </TextBlock>
+
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center" 
+                                   TextWrapping="Wrap">
+                            System element count
+                        </TextBlock>
+                        <TextBox Grid.Row="6" Grid.Column="1" 
+                                 HorizontalAlignment="Stretch" 
+                                 VerticalAlignment="Center" 
+                                 IsEnabled="False" 
+                                 Margin="5,2" 
+                                 Text="{Binding DuctSystem.Count, Mode=OneWay}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="2" 
+                                   HorizontalAlignment="Left" 
+                                   VerticalAlignment="Center">
+                            [-]
+                        </TextBlock>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+    </DockPanel>
+</Window>

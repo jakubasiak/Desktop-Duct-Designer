@@ -1,0 +1,68 @@
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.exe.config
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.exe
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.pdb
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csprojResolveAssemblyReference.cache
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\MainWindow.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\App.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner_MarkupCompile.cache
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner_MarkupCompile.lref
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\MainWindow.baml
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.g.resources
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.Properties.Resources.resources
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csproj.GenerateResource.Cache
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.exe
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.pdb
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\GeneratedInternalTypeHelper.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\HVAC.dll
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\HVAC.pdb
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.exe.config
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.exe
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\HVACDesigner.pdb
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\HVAC.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\HVAC.pdb
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csprojResolveAssemblyReference.cache
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\MainWindow.g.cs
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\App.g.cs
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner_MarkupCompile.cache
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner_MarkupCompile.lref
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\MainWindow.baml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.g.resources
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.Properties.Resources.resources
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csproj.GenerateResource.Cache
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.exe
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.pdb
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\Microsoft.Expression.Interactions.xml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\System.Windows.Interactivity.xml
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\Microsoft.Expression.Interactions.dll
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\System.Windows.Interactivity.dll
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\Microsoft.Expression.Interactions.xml
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\System.Windows.Interactivity.xml
+C:\Users\kubak\OneDrive\dokumenty\visual studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\TargetValueWindow.g.cs
+C:\Users\kubak\OneDrive\dokumenty\visual studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\TargetValueWindow.baml
+C:\Users\kubak\OneDrive\dokumenty\visual studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\Themes\Generic.baml
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\TargetValueWindow.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\TargetValueWindow.baml
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\Themes\Generic.baml
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\RelativeRoughnessWindow.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\RelativeRoughnessWindow.baml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\RelativeRoughnessWindow.g.cs
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\RelativeRoughnessWindow.baml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\DuctDetailsWindow.g.cs
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\DuctDetailsWindow.baml
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\DuctDetailsWindow.g.cs
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\DuctDetailsWindow.baml
+G:\VS\Projects\HVAC\HVACDesigner\bin\Debug\NCalc.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\NCalc.dll
+G:\VS\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csproj.ResolveComReference.cache
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\obj\Debug\HVACDesigner.csproj.ResolveComReference.cache
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\PdfSharp.Charting.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\PdfSharp.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\PdfSharp.xml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\PdfSharp.Charting.xml
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\de\PdfSharp.resources.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\de\PdfSharp.Charting.resources.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\itextsharp.dll
+C:\Users\kubak\OneDrive\Dokumenty\Visual Studio 2017\Projects\HVAC\HVACDesigner\bin\Debug\itextsharp.xml
